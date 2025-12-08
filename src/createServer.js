@@ -20,8 +20,7 @@ function createServer() {
     next();
   });
 
-  app.use('categories', categoriesRoutes);
-
+  app.use('/categories', categoriesRoutes);
   app.use('/users', usersRoutes);
   app.use('/expenses', expensesRoutes);
 
