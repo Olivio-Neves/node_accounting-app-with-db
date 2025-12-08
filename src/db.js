@@ -7,6 +7,7 @@ const utils = require('util');
 require('dotenv').config();
 global.TextEncoder = utils.TextEncoder;
 
+const { Pool } = require('pg');
 const {
   POSTGRES_HOST,
   POSTGRES_PORT,
@@ -19,6 +20,9 @@ const {
   All credentials setted to default values (exsept password - it is exapmle)
   replace if needed with your own
 */
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 const sequelize = new Sequelize({
   database: POSTGRES_DB || 'postgres',
@@ -32,3 +36,5 @@ const sequelize = new Sequelize({
 module.exports = {
   sequelize,
 };
+
+module.exports = pool;
