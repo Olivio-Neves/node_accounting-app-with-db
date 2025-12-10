@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use strict';
 
 const { Sequelize } = require('sequelize');
@@ -7,7 +8,6 @@ const utils = require('util');
 require('dotenv').config();
 global.TextEncoder = utils.TextEncoder;
 
-const { Pool } = require('pg');
 const {
   POSTGRES_HOST,
   POSTGRES_PORT,
@@ -20,9 +20,6 @@ const {
   All credentials setted to default values (exsept password - it is exapmle)
   replace if needed with your own
 */
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
 
 const sequelize = new Sequelize({
   database: POSTGRES_DB || 'postgres',
@@ -30,11 +27,14 @@ const sequelize = new Sequelize({
   host: POSTGRES_HOST || 'localhost',
   dialect: 'postgres',
   port: POSTGRES_PORT || 5432,
-  password: POSTGRES_PASSWORD || '123',
+  password: POSTGRES_PASSWORD || 'Engage',
 });
+
+sequelize
+  .authenticate()
+  .then(() => console.log('Conexão com o banco bem sucedida!'))
+  .catch((err) => console.error('Erro ao conectar no banco:', err));
 
 module.exports = {
   sequelize,
 };
-
-module.exports = pool;
